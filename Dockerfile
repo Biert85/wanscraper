@@ -4,6 +4,7 @@ ARG UID=1000
 ARG GID=1000
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+ADD https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp /usr/local/bin
 
 RUN chmod +x /usr/local/bin/install-php-extensions
 
