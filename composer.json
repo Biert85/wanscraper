@@ -18,6 +18,8 @@
     "require": {
         "php": "^8.0",
         "debril/feed-io": "^5.0",
+        "guzzlehttp/guzzle": "^7.4",
+        "illuminate/http": "^9.0",
         "illuminate/log": "^9.0",
         "laravel-zero/framework": "^9.0",
         "norkunas/youtube-dl-php": "v2.1.2",
