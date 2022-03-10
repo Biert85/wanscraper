@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "601d31d9ff7c57c7919e4b3338141af4",
+    "content-hash": "9de53f0a1d1add4d7a9572fe1d6c1a39",
     "packages": [
         {
             "name": "brick/math",
@@ -65,79 +65,6 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
-        },
-        {
-            "name": "debril/feed-io",
-            "version": "v5.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/alexdebril/feed-io.git",
-                "reference": "23248f789cf00e9b2a6b074201ffd672d470e458"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/alexdebril/feed-io/zipball/23248f789cf00e9b2a6b074201ffd672d470e458",
-                "reference": "23248f789cf00e9b2a6b074201ffd672d470e458",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "guzzlehttp/guzzle": "~6.2|~7.0",
-                "php": ">=8.0",
-                "psr/log": "~1.0|~2.0|~3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.5",
-                "monolog/monolog": "1.*|2.*",
-                "phpstan/phpstan": "^0.12.81",
-                "phpunit/phpunit": "~9.3.0"
-            },
-            "suggest": {
-                "monolog/monolog": "Allows to handle logs"
-            },
-            "bin": [
-                "bin/feedio"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "FeedIo\\": "src/FeedIo"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alexandre Debril",
-                    "email": "alex.debril@gmail.com"
-                }
-            ],
-            "description": "PHP library built to consume and serve JSONFeed / RSS / Atom feeds",
-            "homepage": "https://feed-io.net",
-            "keywords": [
-                "atom",
-                "cli",
-                "client",
-                "feed",
-                "jsonfeed",
-                "news",
-                "rss"
-            ],
-            "support": {
-                "issues": "https://github.com/alexdebril/feed-io/issues",
-                "source": "https://github.com/alexdebril/feed-io/tree/v5.0.10"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/alexdebril",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-02-09T18:23:40+00:00"
         },
         {
             "name": "doctrine/inflector",
