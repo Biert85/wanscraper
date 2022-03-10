@@ -18,6 +18,7 @@
     "require": {
         "php": "^8.0",
         "debril/feed-io": "^5.0",
+        "illuminate/log": "^9.0",
         "laravel-zero/framework": "^9.0",
         "norkunas/youtube-dl-php": "v2.1.2",
         "nunomaduro/termwind": "^1.3"
