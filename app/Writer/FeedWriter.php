@@ -35,10 +35,10 @@ class FeedWriter
 
         $this->xml->startElement('rss');
         $this->xml->writeAttribute('version', '2.0');
-        $this->xml->endElement();
 
         $this->writeChannel($podcast);
 
+        $this->xml->endElement(); // rss
         $this->xml->endDocument();
 
         Storage::put($this->path, $this->xml->flush());
@@ -50,15 +50,15 @@ class FeedWriter
 
         foreach ($podcast->getAtomLinks() as $link) {
             $this->xml->startElementNs(self::NS_ATOM, 'link', self::ns(self::NS_ATOM));
-            $this->xml->writeAttribute('href', $link->getHref());
+            $this->xml->writeAttribute('href', $link->getUri());
             $this->xml->writeAttribute('rel', $link->getRel());
             $this->xml->writeAttribute('type', $link->getType());
-            $this->xml->endElement();
+            $this->xml->endElement(); // atom:link
         }
 
         $this->xml->startElement('title');
         $this->xml->writeCdata($podcast->getTitle());
-        $this->xml->endElement();
+        $this->xml->endElement(); //title
         $this->xml->writeElement('description', $podcast->getDescription());
         $this->xml->writeElement('copyright', $podcast->getCopyright());
         $this->xml->writeElement('language', $podcast->getLanguage());
@@ -70,29 +70,28 @@ class FeedWriter
         $this->xml->writeElement('link', $podcast->getImage()->getLink());
         $this->xml->startElement('title');
         $this->xml->writeCdata($podcast->getImage()->getTitle());
-        $this->xml->endElement();
+        $this->xml->endElement(); // title
         $this->xml->writeElement('url', $podcast->getImage()->getUrl());
-        $this->xml->endElement();
+        $this->xml->endElement(); // image
 
         $this->xml->writeElementNs(self::NS_ITUNES, 'type', self::ns(self::NS_ITUNES), 'episodic');
         $this->xml->startElementNs(self::NS_ITUNES, 'summary', self::ns(self::NS_ITUNES));
         $this->xml->writeCdata($podcast->getDescription());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:summary
         $this->xml->writeElementNs(self::NS_ITUNES, 'author', self::ns(self::NS_ITUNES), $podcast->getAuthor());
         $this->xml->writeElementNs(self::NS_ITUNES, 'explicit', self::ns(self::NS_ITUNES), 'no');
         $this->xml->startElementNs(self::NS_ITUNES, 'image', self::ns(self::NS_ITUNES));
         $this->xml->writeAttribute('href', $podcast->getImage()->getUrl());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:image
         $this->xml->writeElementNs(self::NS_ITUNES, 'new-feed-url', self::ns(self::NS_ITUNES), $podcast->getNewFeedUrl());
         $this->xml->startElementNs(self::NS_ITUNES, 'owner', self::ns(self::NS_ITUNES));
         $this->xml->writeElementNs(self::NS_ITUNES, 'name', self::ns(self::NS_ITUNES), $podcast->getOwner()->getName());
         $this->xml->writeElementNs(self::NS_ITUNES, 'email', self::ns(self::NS_ITUNES), $podcast->getOwner()->getEmail());
-        $this->xml->endElement();
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:owner
 
         $this->writeItems($podcast);
 
-        $this->xml->endElement();
+        $this->xml->endElement(); // channel
     }
 
     private function writeItems(Podcast $podcast): void
@@ -105,46 +104,46 @@ class FeedWriter
     private function writeEpisode(Episode $episode): void
     {
         $this->xml->startElement('item');
+
         $this->xml->startElement('guid');
         $this->xml->writeAttribute('isPermaLink', 'false');
         $this->xml->text($episode->getGuid());
-        $this->xml->endElement();
+        $this->xml->endElement(); // guid
         $this->xml->startElement('title');
         $this->xml->writeCdata($episode->getTitle());
-        $this->xml->endElement();
+        $this->xml->endElement(); // title
         $this->xml->startElement('description');
         $this->xml->writeCdata($episode->getDescription());
-        $this->xml->endCdata();
+        $this->xml->endElement(); // description
         $this->xml->writeElement('pubDate', $episode->getPublishedDate()->format(\DateTimeInterface::RFC2822));
         $this->xml->writeElement('author', $episode->getAuthor());
         $this->xml->writeElement('link', $episode->getLink());
         $this->xml->startElementNs(self::NS_CONTENT, 'encoded', self::ns(self::NS_CONTENT));
         $this->xml->writeCdata($episode->getDescription());
-        $this->xml->endElement();
+        $this->xml->endElement(); // content:encoded
         $this->xml->startElement('enclosure');
         $this->xml->writeAttribute('length', $episode->getMedia()->getLength());
         $this->xml->writeAttribute('type', $episode->getMedia()->getMimeType());
         $this->xml->writeAttribute('url', $episode->getMedia()->getUri());
-        $this->xml->endElement();
+        $this->xml->endElement(); // enclosure
         $this->xml->startElementNs(self::NS_ITUNES, 'title', self::ns(self::NS_ITUNES));
         $this->xml->writeCdata($episode->getTitle());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:title
         $this->xml->writeElementNs(self::NS_ITUNES, 'author', self::ns(self::NS_ITUNES), $episode->getAuthor());
         $this->xml->startElementNs(self::NS_ITUNES, 'image', self::ns(self::NS_ITUNES));
         $this->xml->writeAttribute('href', $episode->getArtwork()->getUri());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:image
         $this->xml->writeElementNs(self::NS_ITUNES, 'duration', self::ns(self::NS_ITUNES), $episode->getDuration());
         $this->xml->startElementNs(self::NS_ITUNES, 'summary', self::ns(self::NS_ITUNES));
         $this->xml->writeCdata($episode->getDescription());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:summary
         $this->xml->startElementNs(self::NS_ITUNES, 'subtitle', self::ns(self::NS_ITUNES));
         $this->xml->writeCdata($episode->getDescription());
-        $this->xml->endElement();
+        $this->xml->endElement(); // itunes:subtitle
         $this->xml->writeElementNs(self::NS_ITUNES, 'explicit', self::ns(self::NS_ITUNES), 'no');
         $this->xml->writeElementNs(self::NS_ITUNES, 'episodeType', self::ns(self::NS_ITUNES), 'full');
-        $this->xml->writeElementNs(self::NS_ITUNES, 'episode', self::ns(self::NS_ITUNES), $episode->getEpisodeNumber());
 
-        $this->xml->endElement();
+        $this->xml->endElement(); // item
     }
 
     private static function ns(string $ns): string
