@@ -3,3 +3,7 @@
 /.vscode
 /.vagrant
 .phpunit.result.cache
+/storage/*
+!storage/.gitkeep
+/cache/*
+!cache/.gitkeep
