@@ -56,6 +56,4 @@ return [
     'providers' => [
         App\Providers\AppServiceProvider::class,
     ],
-
-    'storage_path' => __DIR__.'/../storage',
 ];

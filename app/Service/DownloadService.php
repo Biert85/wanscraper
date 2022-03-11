@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Exception\DownloadException;
 use App\Lib\Duration;
 use App\Lib\Episode;
+use Illuminate\Support\Facades\Storage;
 use YoutubeDl\Entity\Video;
 use YoutubeDl\Options;
 use YoutubeDl\YoutubeDl;
@@ -48,12 +49,14 @@ class DownloadService
 
     protected function createOptions(string $url): Options
     {
+        $path = Storage::path(config('download')['path']);
+
         return Options::create()
             ->format('bestaudio')
             ->extractAudio(true)
             ->audioFormat(Options::AUDIO_FORMAT_MP3)
             ->audioQuality(0)
-            ->downloadPath(config('download')['path'])
+            ->downloadPath($path)
             ->url($url);
     }
 }

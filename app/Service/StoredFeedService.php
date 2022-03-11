@@ -99,6 +99,6 @@ class StoredFeedService
 
     protected function getFeedPath(): string
     {
-        return sprintf('%s/%s', config('app')['storage_path'], config('wanscraper')['output_feed']);
+        return config('wanscraper')['output_feed'];
     }
 }
