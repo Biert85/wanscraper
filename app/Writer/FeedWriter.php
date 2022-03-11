@@ -84,6 +84,11 @@ class FeedWriter
         $this->xml->writeAttribute('href', $podcast->getImage()->getUrl());
         $this->xml->endElement();
         $this->xml->writeElementNs(self::NS_ITUNES, 'new-feed-url', self::ns(self::NS_ITUNES), $podcast->getNewFeedUrl());
+        $this->xml->startElementNs(self::NS_ITUNES, 'owner', self::ns(self::NS_ITUNES));
+        $this->xml->writeElementNs(self::NS_ITUNES, 'name', self::ns(self::NS_ITUNES), $podcast->getOwner()->getName());
+        $this->xml->writeElementNs(self::NS_ITUNES, 'email', self::ns(self::NS_ITUNES), $podcast->getOwner()->getEmail());
+        $this->xml->endElement();
+        $this->xml->endElement();
 
         $this->writeItems($podcast);
 

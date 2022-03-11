@@ -9,4 +9,6 @@ return [
     'author' => 'Linus Tech Tips',
     'copyright' => 'Linus Tech Tips',
     'language' => 'en-us',
+    'feed_url' => 'https://biert.no-ip.org/wanscraper/feed.xml',
+    'email' => 'podcasts60+3cbbb3b8@anchor.fm',
 ];
