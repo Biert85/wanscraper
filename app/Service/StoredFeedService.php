@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Lib\Episode;
 use App\Writer\FeedWriter;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Lukaswhite\PodcastFeedParser\Artwork;
 use Lukaswhite\PodcastFeedParser\Episode as PodcastEpisode;
@@ -32,11 +33,17 @@ class StoredFeedService
         $parser = new Parser();
         $parser->setContent(Storage::get($path));
 
-        return $parser->run();
+        $podcast = $parser->run();
+
+        Log::info(sprintf('Found %d stored episodes', count($podcast->getEpisodes())));
+
+        return $podcast;
     }
 
     protected function createPodcast(): Podcast
     {
+        Log::info('Creating new podcast');
+
         $config = config('feed');
 
         $podcast = (new Podcast())
@@ -68,6 +75,8 @@ class StoredFeedService
 
     public function addEpisode(Podcast $podcast, Episode $episode): void
     {
+        Log::info(sprintf('Adding episode "%s"', $episode->getTitle()));
+
         $media = new Media();
         $media->setUri($episode->getContentUrl())
             ->setMimeType('audio/mpeg')
@@ -93,6 +102,8 @@ class StoredFeedService
 
     public function updateFeed(Podcast $podcast): void
     {
+        Log::info('Writing feed');
+
         $writer = new FeedWriter($this->getFeedPath());
         $writer->write($podcast);
     }

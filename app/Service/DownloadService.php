@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Exception\DownloadException;
 use App\Lib\Duration;
 use App\Lib\Episode;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use YoutubeDl\Entity\Video;
 use YoutubeDl\Options;
@@ -18,6 +19,7 @@ class DownloadService
 
     public function download(Episode $episode): void
     {
+        Log::info(sprintf('Downloading "%s"', $episode->getLink()));
         $options = $this->createOptions($episode->getLink());
 
         $collection = $this->dl->download($options);

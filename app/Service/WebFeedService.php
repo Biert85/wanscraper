@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Lib\Episode;
 use App\Lib\SimplePie\SimplePie;
+use Illuminate\Support\Facades\Log;
 
 class WebFeedService
 {
@@ -33,6 +34,7 @@ class WebFeedService
 
     protected function getFeed(): SimplePie
     {
+        Log::info('Fetching web feed');
         $rss = new SimplePie();
         $rss->set_feed_url(config('wanscraper')['input_feed']);
         $rss->init();
