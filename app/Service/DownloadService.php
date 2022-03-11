@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Exception\DownloadException;
+use App\Lib\Duration;
 use App\Lib\Episode;
 use YoutubeDl\Entity\Video;
 use YoutubeDl\Options;
@@ -37,8 +38,12 @@ class DownloadService
 
     protected function updateEpisode(Episode $episode, Video $video): void
     {
-        $episode->setContentUrl(sprintf('%s/%s', config('download')['base_url'], $video->getFile()->getFilename()))
-            ->setLocalFile($video->getFile());
+        $duration = new Duration($video->getDuration());
+
+        $episode
+            ->setContentUrl(sprintf('%s/%s', config('download')['base_url'], $video->getFile()->getFilename()))
+            ->setLocalFile($video->getFile())
+            ->setDuration((string)$duration);
     }
 
     protected function createOptions(string $url): Options

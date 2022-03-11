@@ -13,6 +13,7 @@ class Episode
     private ?string $contentUrl = null;
     private ?\SplFileInfo $localFile = null;
     private ?string $imageLink = null;
+    private ?string $duration = null;
 
     public function getLink(): string
     {
@@ -94,6 +95,18 @@ class Episode
     public function setImageLink(?string $imageLink): self
     {
         $this->imageLink = $imageLink;
+
+        return $this;
+    }
+
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?string $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }
