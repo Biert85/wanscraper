@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Lib\Episode;
+use App\Writer\FeedWriter;
 use Illuminate\Support\Facades\Storage;
 use Lukaswhite\PodcastFeedParser\Episode as PodcastEpisode;
 use Lukaswhite\PodcastFeedParser\Image;
@@ -15,7 +16,7 @@ class StoredFeedService
 {
     public function getPodcast(): Podcast
     {
-        $path = sprintf('%s/%s', config('app')['storage_path'], config('wanscraper')['output_feed']);
+        $path = $this->getFeedPath();
         if (!Storage::exists($path)) {
             return $this->createPodcast();
         }
@@ -67,5 +68,16 @@ class StoredFeedService
             ->setGuid(Uuid::uuid4());
 
         $podcast->getEpisodes()->add($podcastEpisode);
+    }
+
+    public function updateFeed(Podcast $podcast): void
+    {
+        $writer = new FeedWriter($this->getFeedPath());
+        $writer->write($podcast);
+    }
+
+    protected function getFeedPath(): string
+    {
+        return sprintf('%s/%s', config('app')['storage_path'], config('wanscraper')['output_feed']);
     }
 }
