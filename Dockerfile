@@ -6,7 +6,8 @@ ARG GID=1000
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 ADD https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp /usr/local/bin
 
-RUN chmod +x /usr/local/bin/install-php-extensions
+RUN chmod +x /usr/local/bin/install-php-extensions \
+    && chmod 755 /usr/local/bin/yt-dlp
 
 RUN apt-get update \
     && apt-get install -y git unzip ffmpeg python3 \
