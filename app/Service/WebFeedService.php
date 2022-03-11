@@ -16,7 +16,7 @@ class WebFeedService
     {
         $searchString = strtolower(config('wanscraper')['search_string']);
 
-        return array_filter($episodes, static fn(Episode $episode): bool => str_contains(strtolower($episode), $searchString));
+        return array_filter($episodes, static fn(Episode $episode): bool => str_contains(strtolower($episode->getTitle()), $searchString));
     }
 
     protected function getFeedEpisodes(): array
