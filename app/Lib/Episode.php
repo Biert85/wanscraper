@@ -2,6 +2,8 @@
 
 namespace App\Lib;
 
+use App\Lib\SimplePie\Item;
+
 class Episode
 {
     private string $link = '';
@@ -96,4 +98,13 @@ class Episode
         return $this;
     }
 
+    public static function fromSimplePie(Item $item): self
+    {
+        return (new Episode())
+            ->setTitle($item->get_title())
+            ->setLink($item->get_permalink())
+            ->setDescription($item->get_media_description())
+            ->setPubDate(new \DateTime($item->get_date()))
+            ->setImageLink($item->get_thumbnail_url());
+    }
 }
