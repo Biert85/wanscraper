@@ -9,7 +9,7 @@ ADD https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp /usr/local/
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 RUN apt-get update \
-    && apt-get install -y git unzip ffmpeg \
+    && apt-get install -y git unzip ffmpeg python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && install-php-extensions zip
