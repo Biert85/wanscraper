@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Lib\Episode;
 use App\Writer\FeedWriter;
 use Illuminate\Support\Facades\Storage;
+use Lukaswhite\PodcastFeedParser\Artwork;
 use Lukaswhite\PodcastFeedParser\Episode as PodcastEpisode;
 use Lukaswhite\PodcastFeedParser\Image;
 use Lukaswhite\PodcastFeedParser\Link;
@@ -72,21 +73,22 @@ class StoredFeedService
             ->setMimeType('audio/mpeg')
             ->setLength($episode->getLocalFile()->getSize());
 
-        $image = new Image();
-        $image->setLink($episode->getImageLink())
-            ->setUrl($episode->getImageLink())
-            ->setTitle($episode->getTitle());
+        $artwork = new Artwork();
+        $artwork->setUri($episode->getImageLink());
 
         $podcastEpisode = new PodcastEpisode();
-        $podcastEpisode->setLink($episode->getLink())
+        $podcastEpisode
+            ->setLink($episode->getLink())
             ->setTitle($episode->getTitle())
             ->setDescription($episode->getDescription())
             ->setPublishedDate($episode->getPubDate())
             ->setMedia($media)
-            ->setImage($image)
-            ->setGuid(Uuid::uuid4());
+            ->setGuid(Uuid::uuid4())
+            ->setDuration($episode->getDuration())
+            ->setArtwork($artwork);
 
         $podcast->getEpisodes()->add($podcastEpisode);
+        $podcast->setLastBuildDate(new \DateTime('now'));
     }
 
     public function updateFeed(Podcast $podcast): void
