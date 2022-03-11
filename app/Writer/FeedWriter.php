@@ -58,8 +58,10 @@ class FeedWriter
 
         $this->xml->startElement('title');
         $this->xml->writeCdata($podcast->getTitle());
-        $this->xml->endElement(); //title
-        $this->xml->writeElement('description', $podcast->getDescription());
+        $this->xml->endElement(); // title
+        $this->xml->startElement('description');
+        $this->xml->writeCdata($podcast->getDescription());
+        $this->xml->endElement(); // description
         $this->xml->writeElement('copyright', $podcast->getCopyright());
         $this->xml->writeElement('language', $podcast->getLanguage());
         $this->xml->writeElement('pubDate', $podcast->getLastBuildDate()->format(\DateTimeInterface::RFC2822));
