@@ -1,5 +1,5 @@
 run:
-	docker run --rm -it \
+	docker run --rm \
 	-v $(PWD):/application \
 	-v /mnt/storage/web/wanscraper:/application/storage/app \
 	wanscraper php wanscraper wanshow:update --env=prod
