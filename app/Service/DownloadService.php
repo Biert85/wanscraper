@@ -57,7 +57,7 @@ class DownloadService
             ->format('bestaudio')
             ->extractAudio(true)
             ->audioFormat(Options::AUDIO_FORMAT_MP3)
-            ->audioQuality(0)
+            ->audioQuality('128K')
             ->downloadPath($path)
             ->url($url);
     }
